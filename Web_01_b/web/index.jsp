@@ -24,7 +24,7 @@
             <input type="radio" name="rdoStatus" value="Divorced" checked="checked">Divorced <br>
             ComboBox <select name="txtCombo">
                 <option value="Servlet">JSP and Servlet</option>
-                <<option value="EJB">EJB</option>
+                <option value="EJB">EJB</option>
             </select> <br>
             Mutiple <select name="txtList" multiple="multiple" size="3">
                 <option value="Servlet">Servlet</option>
