@@ -14,8 +14,6 @@ public class UserDAO {
     ArrayList<UserDTO> list = new ArrayList<>();
     
     public UserDAO() {
-        list.add(new UserDTO("admin", "admin", "Nguyen Van A"));
-        list.add(new UserDTO("user1", "user1", "Nguyen Van B"));
     }
     
     public UserDTO searchById(String id){
