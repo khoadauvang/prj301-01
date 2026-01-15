@@ -35,33 +35,17 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         /* TODO output your page here. You may use following sample code. */
 
-        HttpSession session = request.getSession();
-        String url = "";
-//        System.out.println("hello");
-//        System.out.println(session);
-//        System.out.println(session.getAttribute("user"));
+        String action = request.getParameter("action") + "";
         
-        if (session.getAttribute("user") == null ) {
-        
-            String txtUsername = request.getParameter("txtUsername");
-            String txtPassword = request.getParameter("txtPassword");
-
-            UserDAO udao = new UserDAO();
-            UserDTO user = udao.login(txtUsername, txtPassword);
-            if(user != null) {
-                url = "a.jsp";
-                session.setAttribute("user", user);
-            } else { 
-                url = "login.jsp";
-                request.setAttribute("message", "Invalid username or password");
-            }
-        } else {
-            url = "a.jsp";
+        String url = "login.jsp";
+        if (action.equals("login")) {
+            url = "LoginController";
+        } else if (action.equals("logout")) {
+            url = "LogoutController";
         }
-
+        
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
-        //
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
