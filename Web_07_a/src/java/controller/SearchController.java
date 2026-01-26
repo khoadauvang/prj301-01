@@ -6,20 +6,20 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import models.UserDAO;
-import models.UserDTO;
+import models.UniversityDTO;
+import models.UniversityDAO;
 
 /**
  *
  * @author DELL
  */
-public class MainController extends HttpServlet {
+public class SearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,26 +32,26 @@ public class MainController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
         
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
-        String action = request.getParameter("action");
-        if (action == null) {
-            action = "login";
-        }
-        String url = "";
+        response.setContentType("text/html;charset=UTF-8");
         
-        if (action.equals("login")) {
-            url = "LoginController";
-        } else if (action.equals("logout")) {
-            System.out.println("Wazzup ae");
-            url = "LogoutController";
-        } else if (action.equals("search")) {
-            url = "SearchController";
+        String keywords = request.getParameter("keywords"); //qua trang jsp code thêm giao diện
+        if(keywords == null) {
+            keywords = "";
         }
+        
+        System.out.println(keywords);
+        UniversityDAO udao = new UniversityDAO();
+        ArrayList<UniversityDTO> list = new ArrayList<>();
+        if (keywords.trim().length() > 0) {
+            list = udao.filterByName(keywords);
+        }   
+        
+        request.setAttribute("list", list);
+        request.setAttribute("keywords", keywords);
+        String url = "search.jsp";
         
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);

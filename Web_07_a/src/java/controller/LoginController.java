@@ -19,7 +19,7 @@ import models.UserDTO;
  *
  * @author DELL
  */
-public class MainController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,26 +33,35 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /* TODO output your page here. You may use following sample code. */
-        
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
-        String action = request.getParameter("action");
-        if (action == null) {
-            action = "login";
-        }
+        //
         String url = "";
+        HttpSession session = request.getSession();
         
-        if (action.equals("login")) {
-            url = "LoginController";
-        } else if (action.equals("logout")) {
-            System.out.println("Wazzup ae");
-            url = "LogoutController";
-        } else if (action.equals("search")) {
-            url = "SearchController";
+        if (session.getAttribute("user") == null ) {
+        
+            String txtUsername = request.getParameter("txtUsername");
+            String txtPassword = request.getParameter("txtPassword");
+
+            UserDAO udao = new UserDAO();
+            UserDTO user = udao.login(txtUsername, txtPassword);
+            System.out.println(user);
+            if(user != null) {
+                if(user.isStatus()){
+                    url = "welcome.jsp"; //code thêm
+                    session.setAttribute("user", user);
+                } else {
+                    url = "e403.jsp"; //code thêm
+                }
+            } else { 
+                url = "login.jsp";
+                request.setAttribute("message", "Invalid username or password");
+            }
+        } else {
+            url = "welcome.jsp";
         }
-        
+
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
     }

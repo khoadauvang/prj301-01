@@ -18,7 +18,7 @@
             if(u != null) {
         %>
             <h1>Welcome, <%=u.getFullName()%> </h1>
-            <a href="MainController?action=logout&">Logout</a><br/>
+            <a href="MainController?action=logout">Logout</a><br/>
             <a href="search.jsp">Seach</a>
         <%
             } else {

@@ -47,7 +47,7 @@ public class SearchController extends HttpServlet {
         ArrayList<UniversityDTO> list = new ArrayList<>();
         if (keywords.trim().length() > 0) {
             list = udao.filterByName(keywords);
-        }
+        }   
         
         request.setAttribute("list", list);
         request.setAttribute("keywords", keywords);
