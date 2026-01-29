@@ -32,6 +32,7 @@ public class UserDAO {
             
             while(rs.next()){
                 String userID = rs.getString("userID");
+//                System.out.println(userID)
                 String fullName = rs.getString("fullName");
                 String password = rs.getString("password");
                 String roleID = rs.getString("roleID");
